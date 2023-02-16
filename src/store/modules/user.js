@@ -29,18 +29,30 @@ const mutations = {
 
 const actions = {
   // user login
-  login({ commit }, userInfo) {
-    const { username, password } = userInfo
-    return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password }).then(response => {
-        const { data } = response
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
-        resolve()
-      }).catch(error => {
-        reject(error)
-      })
-    })
+  async login({ commit }, userInfo) {
+    const { userNo, password } = userInfo;
+    let result = await login({ userNo: userNo.trim(), password: password })
+    if(result.code === 20000 || result.code === 200){
+      commit('SET_TOKEN', result.data)
+      console.log(result.data)
+      setToken(result.data)
+      // commit('SET_TOKEN', result.token)
+      // console.log(result.token)
+      // setToken(result.token)
+      return 'ok'
+    }else{
+      return Promise.reject(new Error('false'))
+    }
+    // return new Promise((resolve, reject) => {
+    //   login({ username: username.trim(), password: password }).then(response => {
+    //     const { data } = response
+    //     commit('SET_TOKEN', data.token)
+    //     setToken(data.token)
+    //     resolve()
+    //   }).catch(error => {
+    //     reject(error)
+    //   })
+    // })
   },
 
   // get user info
@@ -53,10 +65,10 @@ const actions = {
           return reject('Verification failed, please Login again.')
         }
 
-        const { name, avatar } = data
+        const { userNo, userName } = data
 
-        commit('SET_NAME', name)
-        commit('SET_AVATAR', avatar)
+        commit('SET_NAME', userNo)
+        commit('SET_AVATAR', userName)
         resolve(data)
       }).catch(error => {
         reject(error)

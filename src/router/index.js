@@ -51,8 +51,63 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: { title: '首页', icon: 'el-icon-s-home' }
     }]
+  },
+
+  {
+    path:'/User',
+    component:Layout,
+    name:'product',
+    meta:{title:'用户管理',icon:'el-icon-s-custom'},
+    children:[
+      {
+        path:'student',
+        name:'TradeMark',
+        component:()=>import('@/views/User/student'),
+        meta:{title:'学生列表'}
+      },
+      {
+        path:'attr',
+        name:'Attr',
+        component:()=>import('@/views/User/Attr'),
+        meta:{title:'教师列表'}
+      },
+      {
+        path:'spu',
+        name:'Spu',
+        component:()=>import('@/views/User/Spu'),
+        meta:{title:'管理员列表'}
+      },
+      {
+        path:'sku',
+        name:'Sku',
+        component:()=>import('@/views/User/Sku'),
+        meta:{title:'Sku管理'}
+      },
+    ]
+  },
+
+  {
+    path: '/subject',
+    component:Layout,
+    name:'subject',
+    meta:{title:'学科管理',icon:'el-icon-notebook-2'},
+    children:[
+      {
+        path:'subjectList',
+        name:'SubjectList',
+        component:()=>import('@/views/Subject/subjectList'),
+        meta:{title:'学科列表'}
+      },
+      {
+        path:'subjectCreate',
+        name:'SubjectCreate',
+        component:()=>import('@/views/Subject/subjectCreate'),
+        meta:{title:'学科编创'}
+      },
+
+    ]
   },
 
   {

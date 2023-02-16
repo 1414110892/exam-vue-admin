@@ -35,6 +35,17 @@ Vue.use(ElementUI, { locale })
 
 Vue.config.productionTip = false
 
+//引入相关API请求接口
+import API from '@/api'
+//任意组件可以使用API相关的接口
+Vue.prototype.$API = API;
+
+import tinymce from 'tinymce'
+import VueTinymce from "@packy-tang/vue-tinymce"
+Vue.prototype.$tinymce = tinymce // 将全局tinymce对象指向给Vue作用域下
+//安装组件
+Vue.use(VueTinymce)
+
 new Vue({
   el: '#app',
   router,
