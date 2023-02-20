@@ -120,7 +120,7 @@ import {reqGetSubjectPageList} from "@/api/Question/quesyion";
 
 export default {
   mounted() {
-    this.getPage(this.page)
+    this.getPageList(this.page)
   },
   name: 'questionList',
   data(){
@@ -143,7 +143,7 @@ export default {
   methods:{
 
     //分页查询
-    async getPage(pager){
+    async getPageList(pager){
       let page = pager;
       const query = {
         level:this.select.level,
@@ -153,6 +153,11 @@ export default {
         limit:this.limit,
       }
       const result = await this.$API.question.reqGetSubjectPageList(query)
+      if(result.code == 200){
+        this.total = result.data.total;
+        this.list = result.data.records;
+
+      }
     },
 
     //查询按钮
