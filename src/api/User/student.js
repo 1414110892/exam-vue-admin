@@ -23,5 +23,7 @@ export const reqAddOrUpdateStudent=(student)=>{
 
 //删除学生  /admin/User/baseTrademark/remove/{id}
 
-export const reqDeleteStudent = (id)=>request({url:`/admin/product/baseTrademark/remove/${id}`,method:'delete'})
+export const reqDeleteStudent = (id)=>request({url:`/user/delete/${id}`,method:'delete'})
 
+export const editStatus = (id)=>request({url:`/user/editStatus/${id}`,method:`get`})
+// export const deleteUser = (id)=>request({url:`/user/delete/${id}`,method:`get`})

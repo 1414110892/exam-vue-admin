@@ -17,11 +17,11 @@
       :data="list"
       border
       style="width: 100%;">
-      <el-table-column
-        prop="id"
-        label="Id"
-        width="180">
-      </el-table-column>
+<!--      <el-table-column-->
+<!--        prop="id"-->
+<!--        label="Id"-->
+<!--        width="180">-->
+<!--      </el-table-column>-->
       <el-table-column
         prop="userNo"
         label="用户编号"
@@ -59,7 +59,7 @@
         label="状态"
         width="80">
         <template slot-scope="{row}">
-          <el-button type="success" size="small" plain>{{row.status === 0 ? '启用' : '禁用'}}</el-button>
+          <el-button :type="row.status===0?'success':'danger'" size="small" plain disabled>{{row.status === 0 ? '启用' : '禁用'}}</el-button>
         </template>
       </el-table-column>
       <el-table-column
@@ -67,7 +67,7 @@
         width="280"
        >
         <template slot-scope="{row}">
-          <el-button type="" size="small">禁用</el-button>
+          <el-button type="" size="small" @click="editStatus(row.id)">{{row.status===0?'禁用':'启用'}}</el-button>
           <el-button type="" size="small" @click="editStuBtn(row)">编辑</el-button>
           <el-button type="" size="small">日志</el-button>
           <el-button type="danger" size="small" @click="deleteStuBtn(row)">删除</el-button>
@@ -80,7 +80,7 @@
     -->
     <el-pagination style="margin-top: 20px;text-align: center"
       :current-page="page"
-      :total="total"
+      :total="parseInt(total)"
       :page-size="limit"
       :pager-count="5"
       :page-sizes="[3,5,10]"
@@ -110,22 +110,27 @@
         </el-form-item>
 
         <el-form-item label="性别" :label-width="formLabelWidth">
-          <el-select  placeholder="性别" v-model="stuForm.sex">
+          <el-select  placeholder="请选择" v-model="stuForm.sex">
             <el-option v-for="item in sexEnum" :key="item.key" :value="item.key" :label="item.value"></el-option>
 <!--            <el-option v-for="item in roleOptions" :key="item.value" :value="item.value" :label="item.label"></el-option>-->
           </el-select>
         </el-form-item>
 
-        <el-form-item label="出生日期" :label-width="formLabelWidth">
-          <div class="block">
-            <el-date-picker
-              v-model="stuForm.birthDay"
-              value-format="yyyy-MM-dd" type="date"
-              placeholder="选择日期时间"
-              align="right"
-              :picker-options="pickerOptions">
-            </el-date-picker>
-          </div>
+<!--        <el-form-item label="出生日期" :label-width="formLabelWidth">-->
+<!--          <div class="block">-->
+<!--            <el-date-picker-->
+<!--              ref="calendar"-->
+<!--              v-model="stuForm.birthDay"-->
+<!--              value-format="yyyy-MM-dd" type="date"-->
+<!--              placeholder="选择日期时间"-->
+<!--              align="right"-->
+<!--              :picker-options="pickerOptions">-->
+<!--            </el-date-picker>-->
+<!--          </div>-->
+<!--        </el-form-item>-->
+
+        <el-form-item :label-width="formLabelWidth" label="出生日期">
+          <el-date-picker v-model="stuForm.birthDay" type="date" value-format="yyyy-MM-dd" placeholder="选择日期" />
         </el-form-item>
 
         <el-form-item label="手机" :label-width="formLabelWidth">
@@ -133,13 +138,16 @@
         </el-form-item>
 
         <el-form-item label="年级" :label-width="formLabelWidth" >
-          <el-select  placeholder="请选择年级" v-model="stuForm.userLevel">
+          <el-select  placeholder="请选择" v-model="stuForm.userLevel">
             <el-option v-for="item in levelEnum" :key="item.key" :value="item.key" :label="item.value"></el-option>
           </el-select>
         </el-form-item>
 
         <el-form-item label="状态" :label-width="formLabelWidth">
-          <el-input  autocomplete="off" v-model="stuForm.status"></el-input>
+          <el-select  placeholder="请选择" v-model="stuForm.status">
+            <el-option v-for="item in statusBtn" :key="item.key" :value="item.key" :label="item.value"></el-option>
+          </el-select>
+<!--          <el-input  autocomplete="off" v-model="stuForm.status"></el-input>-->
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -160,6 +168,7 @@ export default {
       // console.log(this.$API)
       //获取列表数据
       this.getPageList();
+
     },
     data(){
       //自定义校验规则
@@ -177,28 +186,28 @@ export default {
         list:[],
         status:'',
         //日历
-        pickerOptions: {
-          shortcuts: [{
-            text: '今天',
-            onClick(picker) {
-              picker.$emit('pick', new Date());
-            }
-          }, {
-            text: '昨天',
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24);
-              picker.$emit('pick', date);
-            }
-          }, {
-            text: '一周前',
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit('pick', date);
-            }
-          }]
-        },
+        // pickerOptions: {
+        //   shortcuts: [{
+        //     text: '今天',
+        //     onClick(picker) {
+        //       picker.$emit('pick', new Date());
+        //     }
+        //   }, {
+        //     text: '昨天',
+        //     onClick(picker) {
+        //       const date = new Date();
+        //       date.setTime(date.getTime() - 3600 * 1000 * 24);
+        //       picker.$emit('pick', date);
+        //     }
+        //   }, {
+        //     text: '一周前',
+        //     onClick(picker) {
+        //       const date = new Date();
+        //       date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+        //       picker.$emit('pick', date);
+        //     }
+        //   }]
+        // },
 
         //添加相应元素
         formLabelWidth: '120px',
@@ -211,7 +220,7 @@ export default {
           userName:'',
           age:'',
           sex:'',
-          birthDay:'',
+          birthDay:null,
           phone:'',
           userLevel:'',
           status:'',
@@ -261,6 +270,7 @@ export default {
       },
 
       handleCurrentChange(pager){
+
         this.page = pager;
         this.getPageList();
       },
@@ -275,30 +285,34 @@ export default {
       addStuBtn(){
         //显示对话框
         this.dialogFormVisible = true
-        //清除数据
-        this.stuForm={
-          userNo:'',
-          password:'',
-          userName:'',
-          age:'',
-          sex:'',
-          birthDay:'',
-          phone:'',
-          userLevel:'',
-          status:'',}
+
         //清除校验规则
         console.log(this.$refs.ruleForm)
-        this.$refs.ruleForm.resetFields();
+        this.$nextTick(() => {
+          //清除数据
+          this.stuForm={
+            userNo:'',
+            password:'',
+            userName:'',
+            age:'',
+            sex:'',
+            birthDay:'',
+            phone:'',
+            userLevel:'',
+            status:'',}
+          this.$refs.ruleForm.resetFields()
+        })
       },
 
       //点击编辑按钮
       editStuBtn(row){
         this.dialogFormVisible = true
-        //将已有的品牌信息赋值给stuForm展示
-        this.stuForm = {...row}
-        //清除校验规则
-        // console.log(this.$refs["rulForm"])
-        this.$refs.ruleForm.resetFields();
+        this.$nextTick(() => {
+          //将已有的品牌信息赋值给stuForm展示
+          this.stuForm = {...row}
+          this.$refs.ruleForm.resetFields()
+        })
+
       },
 
       //添加按钮(添加或者删除)
@@ -339,7 +353,7 @@ export default {
             if(request.code === 200){
               this.$message({
                 type: 'success',
-                message: '删除成功!'
+                message: request.data
               });
               //再次获取学生列表
               this.getPageList(this.list.length>1?this.page:this.page-1)
@@ -358,10 +372,22 @@ export default {
         // if(this.select.userSearch === ''){
           let result = await this.$API.student.reqStudentList(1,this.limit,this.select.userSearch);
           if(result.code == 200){
-            this.total = result.data.total;
+            this.total = parseInt(result.data.total);
             this.list = result.data.records;
           }
         // }
+      },
+      //禁用按钮
+      async editStatus(id){
+        console.log("111")
+        const request = await this.$API.student.editStatus(id);
+        if(request.code === 200){
+          this.$message({
+            type: 'success',
+            message: request.data
+          });
+          this.getPageList();
+        }
       }
     },
     computed:{

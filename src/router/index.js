@@ -109,6 +109,133 @@ export const constantRoutes = [
 
     ]
   },
+  {
+    path: '/paper',
+    component:Layout,
+    name:'paper',
+    meta:{title:'卷库管理',icon:'el-icon-collection'},
+    children:[
+      {
+        path:'paperList',
+        name:'PaperList',
+        component:()=>import('@/views/Paper/paperList/index.vue'),
+        meta:{title:'试卷列表'}
+      },
+      {
+        path:'paperCreate',
+        name:'PaperCreate',
+        component:()=>import('@/views/Paper/paperCreate/index.vue'),
+        meta:{title:'试卷编创'}
+      },
+
+    ]
+  },
+  {
+    path: '/question',
+    component:Layout,
+    name:'question',
+    meta:{title:'题库管理',icon:'el-icon-reading'},
+    children:[
+      {
+        path:'questionList',
+        name:'QuestionList',
+        component:()=>import('@/views/Question/questionList/index.vue'),
+        meta:{title:'题目列表'}
+      },
+      {
+        path:'singleChoice',
+        name:'SingleChoice',
+        component:()=>import('@/views/Question/questionEdit/single-choice.vue'),
+        meta:{title:'单选题编创'}
+      },
+      {
+        path:'multipleChoice',
+        name:'MultipleChoice',
+        component:()=>import('@/views/Question/questionEdit/multiple-choice.vue'),
+        meta:{title:'多选题编创'}
+      },
+      {
+        path:'trueFalse',
+        name:'TrueFalse',
+        component:()=>import('@/views/Question/questionEdit/true-false.vue'),
+        meta:{title:'判断题编创'}
+      },
+      {
+        path:'gapFilling',
+        name:'GapFilling',
+        component:()=>import('@/views/Question/questionEdit/gap-filling.vue'),
+        meta:{title:'填空题编创'}
+      },
+      {
+        path:'shortAnswer',
+        name:'ShortAnswer',
+        component:()=>import('@/views/Question/questionEdit/short-answer.vue'),
+        meta:{title:'简答题编创'}
+      },
+
+    ]
+  },
+
+  {
+    path: '/task',
+    component:Layout,
+    name:'task',
+    meta:{title:'任务管理',icon:'el-icon-bell'},
+    children:[
+      {
+        path:'taskList',
+        name:'TaskList',
+        component:()=>import('@/views/Task/taskList/index.vue'),
+        meta:{title:'任务列表'}
+      },
+      {
+        path:'taskCreate',
+        name:'taskCreate',
+        component:()=>import('@/views/Task/taskCreate/index.vue'),
+        meta:{title:'任务编创'}
+      },
+
+    ]
+  },
+
+  {
+    path: '/answer',
+    component:Layout,
+    name:'answer',
+    meta:{title:'答卷管理',icon:'form'},
+    children:[
+      {
+        path:'correctionList',
+        name:'CorrectionList',
+        component:()=>import('@/views/Answer/answer/correctionList.vue'),
+        meta:{title:'批改列表'}
+      },
+      {
+        path:'answerComplete',
+        name:'AnswerComplete',
+        component:()=>import('@/views/Answer/answer/answerComplete.vue'),
+        meta:{title:'试卷完成'}
+      },
+
+    ]
+  },
+
+  {
+    path: '/log',
+    component:Layout,
+    name:'log',
+    meta:{title:'日志中心',icon:'el-icon-document-checked'},
+    alwaysShow: true,
+    children:[
+      {
+        path:'logInfo',
+        name:'LogInfo',
+        component:()=>import('@/views/Log/log/index.vue'),
+        meta:{title:'用户日志'}
+      },
+
+    ]
+  },
 
   {
     path: '/example',
