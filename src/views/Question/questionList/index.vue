@@ -29,7 +29,7 @@
         width="100"
         trigger="click">
         <el-form-item style="margin-bottom: 0;margin-right: 0">
-          <el-button type="primary"><a :href='"dev-api/excel/downloadExcel"' >模板下载</a></el-button>
+          <el-button type="success"><a :href='"dev-api/excel/downloadExcel"' >模板下载</a></el-button>
         </el-form-item>
         <el-form-item  style="margin-bottom: 0">
           <el-upload
@@ -45,7 +45,7 @@
             :show-file-list="false"
             accept=".xlsx, .xls"
           >
-            <el-button type="primary">模板导入</el-button>
+            <el-button type="success">模板导入</el-button>
           </el-upload>
         </el-form-item>
         <el-button slot="reference" type="primary">导入</el-button>
@@ -60,17 +60,24 @@
         prop="subjectId"
         label="学科"
         width="120">
+        <template slot-scope="{row}">
+          {{formatSubjectLevel(row)}}
+        </template>
       </el-table-column>
       <el-table-column
         prop="questionType"
         label="题型"
         width="120"
       >
+        <template slot-scope="{row}">
+          {{formatType(row.questionType)}}
+        </template>
       </el-table-column>
       <el-table-column
         prop="title"
         label="题干"
-        width="60">
+        width="60"
+        show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="score"
@@ -131,10 +138,14 @@ export default {
       total:0,
       //查询年级
       select:{
+        //年级id
         level:'',
+        //学科id
         subject:'',
         questionType:'',
       },
+
+      //学科实体类的集合
       subjectLevel:'',
       //table
       list:[],
@@ -162,18 +173,48 @@ export default {
 
     //查询按钮
     selectBtn(){
-
+      this.getPageList(this.page);
     },
 
     //编辑题目
-    editStuBtn(){
-
+    editStuBtn(row) {
+      console.log(row)
+      let url = this.formatRouter(row.questionType)
+      this.$router.push({ path: url, query: { row: row } })
     },
 
     //删除题目
     deleteStuBtn(){
 
     },
+
+    //格式化路由地址
+    formatRouter(questionType){
+      for(let item of this.question.editUrlEnum){
+        if(item.key === questionType){
+          return item.value
+        }
+      }
+    },
+    //格式化题目类型
+    formatType(id){
+      for(let item of this.question.typeEnum){
+        if(item.key === id){
+          return item.value
+        }
+      }
+    },
+
+    //格式化学科年级
+    formatSubjectLevel(row){
+      for(let item of this.levelEnum){
+        if(item.key === row.gradeLevel){
+          return row.name+'('+item.value+')'
+
+        }
+      }
+    },
+
     //根据年级查询学科
     async levelChange(){
       this.select.subject = ''

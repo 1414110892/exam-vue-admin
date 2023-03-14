@@ -12,12 +12,14 @@ const state = {
   },
   question: {
     typeEnum: [{ key: 1, value: '单选题' }, { key: 2, value: '多选题' }, { key: 3, value: '判断题' }, { key: 4, value: '填空题' }, { key: 5, value: '简答题' }],
-    editUrlEnum: [{ key: 1, value: '/exam/question/edit/singleChoice', name: '单选题' },
-      { key: 2, value: '/exam/question/edit/multipleChoice', name: '多选题' },
-      { key: 3, value: '/exam/question/edit/trueFalse', name: '判断题' },
-      { key: 4, value: '/exam/question/edit/gapFilling', name: '填空题' },
-      { key: 5, value: '/exam/question/edit/shortAnswer', name: '简答题' }]
-  }
+    editUrlEnum: [{ key: 1, value: '/question/singleChoice', name: '单选题' },
+      { key: 2, value: '/question/multipleChoice', name: '多选题' },
+      { key: 3, value: '/question/trueFalse', name: '判断题' },
+      { key: 4, value: '/question/gapFilling', name: '填空题' },
+      { key: 5, value: '/question/shortAnswer', name: '简答题' }]
+  },
+  scoreEnum:[{ key: 1, value: '1' }, { key: 2, value: '2' },  { key: 3, value: '3' },{ key: 4, value: '4' }, { key: 5, value: '5' }, { key: 8, value: '8' },
+    { key: 10, value: '10' }, { key: 15, value: '15' }, { key: 20, value: '20' }],
 }
 
 const getters= {

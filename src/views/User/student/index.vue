@@ -1,8 +1,8 @@
 <template>
   <div>
-    <el-form  ref="queryForm" :inline="true" :model="select">
-      <el-form-item label="用户名：">
-        <el-input v-model="select.userSearch" ></el-input>
+    <el-form  ref="queryForm" :inline="true" :model="select" >
+      <el-form-item label="用户编号：">
+        <el-input v-model="select.userSearch" maxlength="11"></el-input>
       </el-form-item>
 
       <el-form-item>
@@ -14,6 +14,7 @@
           width: 对应的列宽
      -->
     <el-table
+      v-loading="formLoading"
       :data="list"
       border
       style="width: 100%;">
@@ -94,7 +95,7 @@
     <el-dialog :title="stuForm.id?'修改学生':'添加学生'" :visible.sync="dialogFormVisible">
       <el-form style="width:80%" :model="stuForm" :rules="rules" ref="ruleForm">
         <el-form-item label="学号" :label-width="formLabelWidth" prop="userNo">
-          <el-input  autocomplete="off" v-model="stuForm.userNo" :disabled="stuForm.id?true:false"></el-input>
+          <el-input  autocomplete="off" v-model="stuForm.userNo" :disabled="stuForm.id?true:false" maxlength="11"></el-input>
         </el-form-item>
 
         <el-form-item label="密码" :label-width="formLabelWidth" prop="password">
@@ -134,7 +135,7 @@
         </el-form-item>
 
         <el-form-item label="手机" :label-width="formLabelWidth">
-          <el-input  autocomplete="off" v-model="stuForm.phone"></el-input>
+          <el-input  autocomplete="off" v-model="stuForm.phone" maxlength="11"></el-input>
         </el-form-item>
 
         <el-form-item label="年级" :label-width="formLabelWidth" >
@@ -231,6 +232,8 @@ export default {
         },
         // console.log(isNaN(this.stuForm.userNo))
 
+        //等待
+        formLoading:true,
         //表单验证规则
         rules: {
           userNo: [
@@ -266,6 +269,7 @@ export default {
             this.total = result.data.total;
             this.list = result.data.records;
             this.status = result.data.records.status
+            this.formLoading=false
           }
       },
 
