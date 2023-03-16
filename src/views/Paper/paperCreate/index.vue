@@ -1,6 +1,6 @@
 <template>
-  <div>
-    paperCreate
+  <div class="app-container">
+    paperList
   </div>
 </template>
 
